@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	class USoundBase* PickupSound;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
+	class UOHItemScanner* ItemScanner;
+
 protected:
 	/** Called every time we pick up something */
 	void OnPickup();

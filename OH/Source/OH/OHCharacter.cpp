@@ -10,6 +10,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
+#include "OHItemScanner.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -31,6 +32,11 @@ AOHCharacter::AOHCharacter()
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+
+	// Item scanner for pickup
+	ItemScanner = CreateDefaultSubobject<UOHItemScanner>(TEXT("Item Pickup Scanner"));
+	ItemScanner->SetupAttachment(FirstPersonCameraComponent);
+	ItemScanner->Eye = FirstPersonCameraComponent;
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
@@ -65,7 +71,7 @@ void AOHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AOHCharacter::OnPickup);
+	PlayerInputComponent->BindAction("Pickup", IE_Pressed, this, &AOHCharacter::OnPickup);
 
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AOHCharacter::OnResetVR);
 
@@ -85,6 +91,7 @@ void AOHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 void AOHCharacter::OnPickup()
 {
 	// TODO implement
+	UE_LOG(LogTemp, Warning, TEXT("Pickup!"));
 }
 
 void AOHCharacter::OnResetVR()

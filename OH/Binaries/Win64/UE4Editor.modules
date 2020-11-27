@@ -2,6 +2,10 @@
 	"BuildId": "13144385",
 	"Modules": 
 	{
+<<<<<<< HEAD
 		"OH": "UE4Editor-OH-0008.dll"
+=======
+		"OH": "UE4Editor-OH.dll"
+>>>>>>> 28b1bddcd30c52ee674ea52895b98733d8e3a771
 	}
 }
