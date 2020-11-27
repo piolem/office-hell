@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InventoryBack.h"
 #include "GameFramework/Character.h"
 #include "OHCharacter.generated.h"
-
 class UInputComponent;
 
 UCLASS(config=Game)
@@ -75,6 +75,8 @@ public:
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+
+	InventoryBack Inventory;
 
 };
 
