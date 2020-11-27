@@ -2,6 +2,7 @@
 
 
 #include "OHItemScanner.h"
+#include "Camera/CameraComponent.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -30,17 +31,40 @@ void UOHItemScanner::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+    if(!Eye)
+    {
+        return; // no eye
+    }
+
     // trace line from the component location to the item
 
     FCollisionQueryParams TraceParams;
 
     FHitResult Hit;
-    FVector StartLocation = GetComponentLocation();
-    FVector EndLocation = StartLocation + GetComponentRotation().Vector() * 1500.f;
+    FVector StartLocation = Eye->GetComponentLocation();
+    FVector EndLocation = StartLocation + Eye->GetComponentRotation().Vector() * 1500.f;
 
     GetWorld()->LineTraceSingleByChannel(Hit, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility,
                                          TraceParams, FCollisionResponseParams::DefaultResponseParam);
 
-   DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Yellow, false, -1, 0, 2.0f);
+    bool bItemWasHit = false;
+    
+    if(Hit.IsValidBlockingHit())
+    {
+        if(auto* HitActor = Hit.GetActor())
+        {
+            if(HitActor->ActorHasTag("Item"))
+            {
+                bItemWasHit = true;
+                ScannedItem = HitActor;
+                UE_LOG(LogTemp, Warning, TEXT("Scanned: %s"), *ScannedItem->GetActorLabel());
+            }
+        }
+    }
+
+    if(!bItemWasHit)
+    {
+        ScannedItem = nullptr;
+    }
     // ...
 }

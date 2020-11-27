@@ -35,6 +35,8 @@ AOHCharacter::AOHCharacter()
 
 	// Item scanner for pickup
 	ItemScanner = CreateDefaultSubobject<UOHItemScanner>(TEXT("Item Pickup Scanner"));
+	ItemScanner->SetupAttachment(FirstPersonCameraComponent);
+	ItemScanner->Eye = FirstPersonCameraComponent;
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));

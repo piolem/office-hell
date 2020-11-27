@@ -10,19 +10,32 @@
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class OH_API UOHItemScanner : public USceneComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UOHItemScanner();
+public:
+    // Sets default values for this component's properties
+    UOHItemScanner();
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
+    class UCameraComponent* Eye;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
+    float ScanDistance = 500.f;
+
+    UFUNCTION()
+    FORCEINLINE AActor* GetScannedItem() const { return ScannedItem; }
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+    // Called when the game starts
+    virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+public:
+    // Called every frame
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+                               FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+
+private:
+    UPROPERTY()
+    AActor* ScannedItem = nullptr;
 };
