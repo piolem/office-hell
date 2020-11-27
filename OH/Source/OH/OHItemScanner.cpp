@@ -57,14 +57,25 @@ void UOHItemScanner::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
             {
                 bItemWasHit = true;
                 ScannedItem = HitActor;
-                UE_LOG(LogTemp, Warning, TEXT("Scanned: %s"), *ScannedItem->GetActorLabel());
+                SetItemHighlight(true);
             }
         }
     }
 
-    if(!bItemWasHit)
+    if(!bItemWasHit && ScannedItem)
     {
+        SetItemHighlight(false);
         ScannedItem = nullptr;
     }
     // ...
+}
+
+void UOHItemScanner::SetItemHighlight(bool Enabled) const
+{
+    TArray<UStaticMeshComponent*> MeshComponents;
+    ScannedItem->GetComponents<UStaticMeshComponent>(MeshComponents);
+    for(auto* Component : MeshComponents)
+    {
+        Component->SetRenderCustomDepth(Enabled);
+    }
 }

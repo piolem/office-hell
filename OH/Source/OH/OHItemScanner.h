@@ -38,4 +38,6 @@ public:
 private:
     UPROPERTY()
     AActor* ScannedItem = nullptr;
+
+    void SetItemHighlight(bool Enabled) const;
 };
