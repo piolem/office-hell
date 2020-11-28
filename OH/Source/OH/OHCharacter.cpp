@@ -62,6 +62,7 @@ void AOHCharacter::BeginPlay()
 	Super::BeginPlay();
 	Mesh1P->SetHiddenInGame(true, true);
 	bIsShowingInventory = false;
+	bIsShowingGameOver = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
