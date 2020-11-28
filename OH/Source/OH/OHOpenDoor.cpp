@@ -19,12 +19,14 @@ void UOHOpenDoor::OpenDoor()
 
 	if(!bIsOpened)
 	{
-		Owner->SetActorRotation(TargetDoorRotation);
+		Owner->SetActorRelativeRotation(TargetDoorRotation);
+		Owner->SetActorLocation(OpenedDoorLocation);
 		bIsOpened = true;
 	}
 	else
 	{
-		Owner->SetActorRotation(StartDoorRotation);
+		Owner->SetActorRelativeRotation(StartDoorRotation);
+		Owner->SetActorLocation(ClosedDoorLocation);
 		bIsOpened = false;
 	}
 }
@@ -35,9 +37,23 @@ void UOHOpenDoor::BeginPlay()
 	Super::BeginPlay();
 
 	StartDoorRotation = GetOwner()->GetActorRotation();
-	TargetDoorRotation = StartDoorRotation + FRotator(0.f, MaxOpenAngleDegrees, 0.f);
+	TargetDoorRotation = StartDoorRotation + FRotator(0.f, -MaxOpenAngleDegrees, 0.f);
 	// ...
-	
+
+	TArray<UStaticMeshComponent*> Components;
+	GetOwner()->GetComponents<UStaticMeshComponent>(Components);
+
+	for (auto* Component : Components)
+	{
+		if(Component->ComponentHasTag("OpenedState"))
+		{
+			OpenedDoorLocation = Component->GetComponentLocation();
+		}
+		if(Component->ComponentHasTag("ClosedState"))
+		{
+			ClosedDoorLocation = Component->GetComponentLocation();
+		}
+	}
 }
 
 

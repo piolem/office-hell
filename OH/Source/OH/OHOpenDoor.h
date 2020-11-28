@@ -37,4 +37,7 @@ public:
 	bool bIsOpened = false;
 	FRotator StartDoorRotation;
 	FRotator TargetDoorRotation;
+
+	FVector OpenedDoorLocation;
+	FVector ClosedDoorLocation;
 };
