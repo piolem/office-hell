@@ -12,6 +12,7 @@
 #include "MotionControllerComponent.h"
 #include "OHItemScanner.h"
 #include "OHInventoryComponent.h"
+#include "OHOpenDoor.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -97,6 +98,17 @@ void AOHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 
 }
 
+void AOHCharacter::OnOpenDoor(AActor* ScannedActor)
+{
+	TArray<UOHOpenDoor*> DoorOpeners;
+	ScannedActor->GetComponents<UOHOpenDoor>(DoorOpeners);
+
+	for (auto DoorOpener : DoorOpeners)
+	{
+		DoorOpener->OpenDoor();	
+	}
+}
+
 void AOHCharacter::OnInteract()
 {
 	if(AActor* ScannedActor = ItemScanner->GetScannedItem())
@@ -115,7 +127,7 @@ void AOHCharacter::OnInteract()
 		}
 		else if(ScannedActor->ActorHasTag("Door"))
 		{
-			//OnOpenDoor
+			OnOpenDoor(ScannedActor);
 		}
 	}
 }
