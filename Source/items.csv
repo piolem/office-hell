@@ -1,14 +1,14 @@
-Passport;The most important identification document that I own, without it I’m nothing.
-Passport copies;Two copies of all the pages of my passport that have anything written on them - my personal information, stamps, visas, legal notes etc.
-Apartment rent contract;A written contract signed by me and my landlord. It proves that I have a place to live in the city.
-Apartment rent contract copy;A copy of the written contract signed by me and my landlord. It proves that I have a place to live in the city.
-C016 ticket;A ticket with “C016” printed on it.
-C045 ticket;A ticket with “C045” printed on it.
-Blank residence permit application form;An application form for residence permit. It’s blank.
-Residence permit application;An application form for residence permit. It’s filled in with my personal information, including a history of all my foreign travels and my dog’s name.
-Residence permit application in two copies;An application form for residence permit. It’s filled in with my personal information, including a history of all my foreign travels and my dog’s name. There are two copies.
-Blank invitation for a foreigner form;A form for inviting a foreigner to come visit this country. It helps getting them a visa. Not what I’m looking for right now, but now that I think about it, maybe I should invite mom and dad for holidays?
-Blank work permit application form;An application form for work permit. I’m not looking to hire anyone so it’s not what I’m looking for.
-Blank seasonal work permit application form;An application form for seasonal work permit. I’m not looking to hire anyone to pick up strawberries so it’s not what I’m looking for.
-Blank declaration form;A blank form that only has the name and the address of the immigration office on it, it’s used to write any sort of declaration that might be important in your proceeding.
-Photos;Four photos of my face. The size is 35 by 45 milimeters.
+Passport,"""The most important identification document that I own, without it I’m nothing."""
+Passport copies,"""Two copies of all the pages of my passport that have anything written on them - my personal information, stamps, visas, legal notes etc."""
+Apartment rent contract,"""A written contract signed by me and my landlord. It proves that I have a place to live in the city."""
+Apartment rent contract copy,"""A copy of the written contract signed by me and my landlord. It proves that I have a place to live in the city."""
+C016 ticket,"""A ticket with “C016""printed on it."""
+C045 ticket,"""A ticket with “C045""printed on it."""
+Blank residence permit application form,"""An application form for residence permit. It’s blank."""
+Residence permit application,"""An application form for residence permit. It’s filled in with my personal information, including a history of all my foreign travels and my dog’s name."""
+Residence permit application in two copies,"""An application form for residence permit. It’s filled in with my personal information, including a history of all my foreign travels and my dog’s name. There are two copies."""
+Blank invitation for a foreigner form,"""A form for inviting a foreigner to come visit this country. It helps getting them a visa. Not what I’m looking for right now, but now that I think about it, maybe I should invite mom and dad for holidays?"""
+Blank work permit application form,"""An application form for work permit. I’m not looking to hire anyone so it’s not what I’m looking for."""
+Blank seasonal work permit application form,"""An application form for seasonal work permit. I’m not looking to hire anyone to pick up strawberries so it’s not what I’m looking for."""
+Blank declaration form,"""A blank form that only has the name and the address of the immigration office on it, it’s used to write any sort of declaration that might be important in your proceeding."""
+Photos,"""Four photos of my face. The size is 35 by 45 milimeters."""
