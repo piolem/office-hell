@@ -34,6 +34,14 @@ public:
 
 	void DebugDisplayItems();
 
+	// obtain copy of the items collection to be displayed
+	UFUNCTION(BlueprintCallable)
+	TArray<FString> GetCopy() const;
+
+	// synchronize items with the copy
+	UFUNCTION(BlueprintCallable)
+	void Sync(const TArray<FString> Copy);
+
 private:
 	InventoryBack Backend;
 };

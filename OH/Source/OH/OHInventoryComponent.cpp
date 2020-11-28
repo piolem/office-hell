@@ -78,3 +78,27 @@ void UOHInventoryComponent::DebugDisplayItems()
 	}
 }
 
+TArray<FString> UOHInventoryComponent::GetCopy() const
+{
+	TArray<FString> InventoryClone;
+	
+	for(int i = 0; i < InventoryBack::MaxInventorySlots; ++i)
+	{
+		if(Backend.Slot[i] != InventoryBack::EmptyInventorySlot)
+		{
+			InventoryClone.Add(UTF8_TO_TCHAR(Backend.Slot[i].c_str()));
+		}
+	}
+
+	return InventoryClone;
+}
+
+void UOHInventoryComponent::Sync(const TArray<FString> EditedInventory)
+{
+	RemoveAllItems();
+	for(auto& Item : EditedInventory)
+	{
+		AddItem(Item);
+	}
+}
+
