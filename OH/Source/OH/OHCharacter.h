@@ -47,6 +47,7 @@ public:
 	class UOHInventoryComponent* Inventory;
 
 protected:
+	void OnOpenDoor(AActor* ScannedActor);
 	void OnInteract();
 	
 	/** Called every time we pick up something */
