@@ -103,7 +103,11 @@ void AOHCharacter::OnInteract()
 	{
 		if(ScannedActor->ActorHasTag("Item"))
 		{
-			OnPickup(ScannedActor);
+			OnPickup(ScannedActor, true);
+		}
+		else if(ScannedActor->ActorHasTag("Item-persistent"))
+		{
+			OnPickup(ScannedActor, false);
 		}
 		else if(ScannedActor->ActorHasTag("Person"))
 		{
@@ -116,11 +120,14 @@ void AOHCharacter::OnInteract()
 	}
 }
 
-void AOHCharacter::OnPickup(AActor* ItemActor)
+void AOHCharacter::OnPickup(AActor* ItemActor, bool bShouldDestroy)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Pickup!"));
 	Inventory->AddItem(ItemActor->GetActorLabel());
-	ItemActor->Destroy();
+	if(bShouldDestroy)
+	{
+		ItemActor->Destroy();
+	}
 }
 
 void AOHCharacter::OnToggleInventory()

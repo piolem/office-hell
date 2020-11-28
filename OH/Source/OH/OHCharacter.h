@@ -50,7 +50,7 @@ protected:
 	void OnInteract();
 	
 	/** Called every time we pick up something */
-	void OnPickup(AActor* ItemActor);
+	void OnPickup(AActor* ItemActor, bool bShouldDestroy);
 
 	void OnToggleInventory();
 	
