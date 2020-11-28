@@ -29,6 +29,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Widget Templates")
 	TSubclassOf<class UUserWidget> HUDWidgetCrosshairClass;
 
+	UPROPERTY(EditAnywhere, Category="Widget Templates")
+	TSubclassOf<class UUserWidget> HUDWidgetDialogClass;
+
 	UPROPERTY()
 	class UUserWidget* HUDWidgetGameOver;
 
@@ -37,6 +40,9 @@ protected:
 
 	UPROPERTY()
 	class UUserWidget* HUDWidgetCrosshair;
+
+	UPROPERTY()
+	class UUserWidget* HUDWidgetDialog;
 
 private:
 	void AddUserWidget(const TSubclassOf<class UUserWidget>& WidgetClass, class UUserWidget* Widget);	

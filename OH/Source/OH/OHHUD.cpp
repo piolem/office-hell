@@ -23,6 +23,7 @@ void AOHHUD::BeginPlay()
 	AddUserWidget(HUDWidgetCrosshairClass, HUDWidgetCrosshair);
 	AddUserWidget(HUDWidgetGameOverClass, HUDWidgetGameOver);
 	AddUserWidget(HUDWidgetInventoryClass, HUDWidgetInventory);
+	AddUserWidget(HUDWidgetDialogClass, HUDWidgetDialog);
 }
 
 void AOHHUD::AddUserWidget(const TSubclassOf<UUserWidget>& WidgetClass, UUserWidget* Widget)
