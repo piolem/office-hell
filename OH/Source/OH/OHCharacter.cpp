@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "OHItemScanner.h"
+#include "OHInventoryComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -38,6 +39,10 @@ AOHCharacter::AOHCharacter()
 	ItemScanner->SetupAttachment(FirstPersonCameraComponent);
 	ItemScanner->Eye = FirstPersonCameraComponent;
 
+	// Inventory
+	Inventory = CreateDefaultSubobject<UOHInventoryComponent>(TEXT("Inventory"));
+	Inventory->SetupAttachment(FirstPersonCameraComponent);
+
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	Mesh1P->SetOnlyOwnerSee(true);
@@ -56,6 +61,7 @@ void AOHCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 	Mesh1P->SetHiddenInGame(true, true);
+	bIsShowingInventory = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -71,7 +77,8 @@ void AOHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind fire event
-	PlayerInputComponent->BindAction("Pickup", IE_Pressed, this, &AOHCharacter::OnPickup);
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AOHCharacter::OnInteract);
+	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AOHCharacter::OnToggleInventory);
 
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AOHCharacter::OnResetVR);
 
@@ -86,12 +93,52 @@ void AOHCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAxis("TurnRate", this, &AOHCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AOHCharacter::LookUpAtRate);
+
 }
 
-void AOHCharacter::OnPickup()
+void AOHCharacter::OnInteract()
 {
-	// TODO implement
+	if(AActor* ScannedActor = ItemScanner->GetScannedItem())
+	{
+		if(ScannedActor->ActorHasTag("Item"))
+		{
+			OnPickup(ScannedActor);
+		}
+		else if(ScannedActor->ActorHasTag("Person"))
+		{
+			//OnStartConversation
+		}
+		else if(ScannedActor->ActorHasTag("Door"))
+		{
+			//OnOpenDoor
+		}
+	}
+}
+
+void AOHCharacter::OnPickup(AActor* ItemActor)
+{
 	UE_LOG(LogTemp, Warning, TEXT("Pickup!"));
+	Inventory->AddItem(ItemActor->GetActorLabel());
+	ItemActor->Destroy();
+}
+
+void AOHCharacter::OnToggleInventory()
+{
+	bIsShowingInventory = !bIsShowingInventory;
+	
+	if( APlayerController* const PC = CastChecked<APlayerController>(Controller))
+	{
+		if(bIsShowingInventory)
+		{
+			PC->SetInputMode(FInputModeGameAndUI());
+			PC->bShowMouseCursor = true;
+		}
+		else
+		{
+			PC->SetInputMode(FInputModeGameOnly());
+			PC->bShowMouseCursor = false;
+		}
+	}
 }
 
 void AOHCharacter::OnResetVR()
@@ -157,12 +204,20 @@ void AOHCharacter::MoveRight(float Value)
 
 void AOHCharacter::TurnAtRate(float Rate)
 {
+	if(bIsShowingInventory)
+	{
+		return;
+	}
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AOHCharacter::LookUpAtRate(float Rate)
 {
+	if(bIsShowingInventory)
+	{
+		return;
+	}
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }

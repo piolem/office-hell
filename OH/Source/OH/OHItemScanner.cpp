@@ -53,7 +53,7 @@ void UOHItemScanner::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
     {
         if(auto* HitActor = Hit.GetActor())
         {
-            if(HitActor->ActorHasTag("Item"))
+            if(HitActor->ActorHasTag("Interactable"))
             {
                 bItemWasHit = true;
                 ScannedItem = HitActor;

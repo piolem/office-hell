@@ -3,6 +3,8 @@
 
 #include "InventoryBack.h"
 
+std::string InventoryBack::EmptyInventorySlot = "empty";
+
 InventoryBack::InventoryBack()
 {
 

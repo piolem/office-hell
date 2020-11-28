@@ -6,30 +6,37 @@
 #include "TextureResource.h"
 #include "CanvasItem.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
 
 AOHHUD::AOHHUD()
 {
-	// Set the crosshair texture
-	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshairTexObj(TEXT("/Game/FirstPerson/Textures/FirstPersonCrosshair"));
-	CrosshairTex = CrosshairTexObj.Object;
 }
-
 
 void AOHHUD::DrawHUD()
 {
 	Super::DrawHUD();
+}
 
-	// Draw very simple crosshair
+void AOHHUD::BeginPlay()
+{
+	Super::BeginPlay();
+	AddUserWidget(HUDWidgetCrosshairClass, HUDWidgetCrosshair);
+	AddUserWidget(HUDWidgetGameOverClass, HUDWidgetGameOver);
+	AddUserWidget(HUDWidgetInventoryClass, HUDWidgetInventory);
+}
 
-	// find center of the Canvas
-	const FVector2D Center(Canvas->ClipX * 0.5f, Canvas->ClipY * 0.5f);
+void AOHHUD::AddUserWidget(const TSubclassOf<UUserWidget>& WidgetClass, UUserWidget* Widget)
+{
+	checkf(WidgetClass, TEXT("Unable to find WidgetClass. Please make sure it is attached in derived blueprint"));
 
-	// offset by half the texture's dimensions so that the center of the texture aligns with the center of the Canvas
-	const FVector2D CrosshairDrawPosition( (Center.X),
-										   (Center.Y + 20.0f));
+	Widget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
 
-	// draw the crosshair
-	FCanvasTileItem TileItem( CrosshairDrawPosition, CrosshairTex->Resource, FLinearColor::White);
-	TileItem.BlendMode = SE_BLEND_Translucent;
-	Canvas->DrawItem( TileItem );
+	checkf(Widget, TEXT("Failed to create Widget!"));
+
+	if(Widget == nullptr)
+	{
+		return;
+	}
+
+	Widget->AddToViewport();
 }

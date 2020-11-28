@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InventoryBack.h"
 #include "GameFramework/Character.h"
 #include "OHCharacter.generated.h"
 class UInputComponent;
@@ -43,9 +42,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
 	class UOHItemScanner* ItemScanner;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
+	class UOHInventoryComponent* Inventory;
+
 protected:
+	void OnInteract();
+	
 	/** Called every time we pick up something */
-	void OnPickup();
+	void OnPickup(AActor* ItemActor);
+
+	void OnToggleInventory();
 	
 	/** Resets HMD orientation and position in VR. */
 	void OnResetVR();
@@ -74,12 +80,13 @@ protected:
 	// End of APawn interface
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
+	bool bIsShowingInventory;
+	
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
-	InventoryBack Inventory;
 
 };
 
