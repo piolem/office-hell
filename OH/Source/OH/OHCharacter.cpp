@@ -204,20 +204,12 @@ void AOHCharacter::MoveRight(float Value)
 
 void AOHCharacter::TurnAtRate(float Rate)
 {
-	if(bIsShowingInventory)
-	{
-		return;
-	}
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
 
 void AOHCharacter::LookUpAtRate(float Rate)
 {
-	if(bIsShowingInventory)
-	{
-		return;
-	}
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
