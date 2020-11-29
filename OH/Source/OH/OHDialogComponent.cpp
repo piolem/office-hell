@@ -3,6 +3,7 @@
 
 #include "OHDialogComponent.h"
 #include "OHCharacter.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
 UOHDialogComponent::UOHDialogComponent()
@@ -64,6 +65,7 @@ void UOHDialogComponent::StartConversation(UDataTable* ConversationData)
 void UOHDialogComponent::NextConversationDialog(FString Key)
 {
 	bShouldDisplayResponses = false;
+	SkipDialog();
 	
 	Play(FName(Key));
 }
@@ -75,6 +77,7 @@ void UOHDialogComponent::EndConversation()
 	if(AOHCharacter* OwnerCharacter = Cast<AOHCharacter>(GetOwner()))
 	{
 		OwnerCharacter->EndConversation();
+		OwnerCharacter->AudioComponent->Stop();
 	}
 
 	CurrentConversationDialog = "";
@@ -83,6 +86,11 @@ void UOHDialogComponent::EndConversation()
 void UOHDialogComponent::SkipDialog()
 {
 	ConversationTimer = 0;
+	if(AOHCharacter* OwnerCharacter = Cast<AOHCharacter>(GetOwner()))
+	{
+		OwnerCharacter->AudioComponent->Stop();
+	}
+			
 }
 
 void UOHDialogComponent::Play(FName Key)
@@ -101,6 +109,12 @@ void UOHDialogComponent::Play(FName Key)
 
 		if(FirstDialog->SoundCue)
 		{
+			if(AOHCharacter* OwnerCharacter = Cast<AOHCharacter>(GetOwner()))
+			{
+				OwnerCharacter->AudioComponent->SetSound(FirstDialog->SoundCue);
+				OwnerCharacter->AudioComponent->Play();
+			}
+			
 			EndDialogTime = FirstDialog->SoundCue->GetDuration();
 		}
 		else

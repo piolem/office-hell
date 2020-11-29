@@ -49,6 +49,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
 	class UOHDialogComponent* DialogComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Audio)
+	class UAudioComponent* AudioComponent;
+
 	UFUNCTION(BlueprintCallable)
 	void EndConversation();
 
