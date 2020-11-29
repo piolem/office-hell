@@ -28,7 +28,11 @@ public:
 
 	void AddItem(FString UniqueItemName);
 
+	UFUNCTION(BlueprintCallable)		
 	void RemoveItem(FString UniqueItemName);
+
+	UFUNCTION(BlueprintCallable)
+	bool HasItem(FString UniqueItemName);
 
 	void RemoveAllItems();
 
