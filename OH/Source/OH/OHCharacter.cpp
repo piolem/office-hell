@@ -15,6 +15,7 @@
 #include "OHOpenDoor.h"
 #include "OHDialogComponent.h"
 #include "OHConversationistComponent.h"
+#include "Components/AudioComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -54,6 +55,9 @@ AOHCharacter::AOHCharacter()
 	Mesh1P->CastShadow = false;
 	Mesh1P->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
+
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component"));
+	AudioComponent->SetupAttachment(FirstPersonCameraComponent);
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
@@ -111,6 +115,7 @@ void AOHCharacter::EndConversation()
 		PC->bShowMouseCursor = false;
 	}
 	bIsConversationActive = false;
+	EventOnConversationEnded(Conversee);
 }
 
 void AOHCharacter::OnOpenDoor(AActor* ScannedActor)
@@ -122,6 +127,8 @@ void AOHCharacter::OnOpenDoor(AActor* ScannedActor)
 	{
 		DoorOpener->OpenDoor();	
 	}
+
+	EventOnDoorOpened(ScannedActor);
 }
 
 void AOHCharacter::OnStartConversation(AActor* ScannedActor)
@@ -144,6 +151,7 @@ void AOHCharacter::OnStartConversation(AActor* ScannedActor)
 
 	DialogComponent->StartConversation(DataTable);
 	bIsConversationActive = true;
+	Conversee = ScannedActor;
 }
 
 void AOHCharacter::OnInteract()
