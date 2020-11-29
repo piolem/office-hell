@@ -115,6 +115,7 @@ void AOHCharacter::EndConversation()
 		PC->bShowMouseCursor = false;
 	}
 	bIsConversationActive = false;
+	EventOnConversationEnded(Conversee);
 }
 
 void AOHCharacter::OnOpenDoor(AActor* ScannedActor)
@@ -126,6 +127,8 @@ void AOHCharacter::OnOpenDoor(AActor* ScannedActor)
 	{
 		DoorOpener->OpenDoor();	
 	}
+
+	EventOnDoorOpened(ScannedActor);
 }
 
 void AOHCharacter::OnStartConversation(AActor* ScannedActor)
@@ -148,6 +151,7 @@ void AOHCharacter::OnStartConversation(AActor* ScannedActor)
 
 	DialogComponent->StartConversation(DataTable);
 	bIsConversationActive = true;
+	Conversee = ScannedActor;
 }
 
 void AOHCharacter::OnInteract()

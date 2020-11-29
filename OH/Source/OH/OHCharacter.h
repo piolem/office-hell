@@ -55,6 +55,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void EndConversation();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void EventOnDoorOpened(AActor* DoorActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void EventOnConversationEnded(AActor* OtherActor);
+
 protected:
 	void OnOpenDoor(AActor* ScannedActor);
 	void OnStartConversation(AActor* Actor);
@@ -100,6 +106,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
 	bool bIsConversationActive;
+
+	UPROPERTY()
+	AActor* Conversee;
 	
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
