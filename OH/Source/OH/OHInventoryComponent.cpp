@@ -59,6 +59,11 @@ void UOHInventoryComponent::RemoveItem(FString UniqueItemName)
 	Backend.remove_item(std::string(TCHAR_TO_UTF8(*UniqueItemName)));
 }
 
+bool UOHInventoryComponent::HasItem(FString UniqueItemName)
+{
+	return Backend.check_item(std::string(TCHAR_TO_UTF8(*UniqueItemName)));
+}
+
 void UOHInventoryComponent::RemoveAllItems()
 {
 	for(int i = 0; i < InventoryBack::MaxInventorySlots; ++i)

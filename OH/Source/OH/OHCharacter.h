@@ -46,8 +46,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
 	class UOHInventoryComponent* Inventory;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gameplay)
+	class UOHDialogComponent* DialogComponent;
+
+	UFUNCTION(BlueprintCallable)
+	void EndConversation();
+
 protected:
 	void OnOpenDoor(AActor* ScannedActor);
+	void OnStartConversation(AActor* Actor);
 	void OnInteract();
 	
 	/** Called every time we pick up something */
@@ -87,6 +94,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
 	bool bIsShowingGameOver;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI")
+	bool bIsConversationActive;
 	
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
