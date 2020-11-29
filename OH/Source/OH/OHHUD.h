@@ -31,6 +31,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category="Widget Templates")
 	TSubclassOf<class UUserWidget> HUDWidgetDialogClass;
+	
+	UPROPERTY(EditAnywhere, Category="Widget Templates")
+	TSubclassOf<class UUserWidget> HUDWidgetConversationSelectorClass;;
 
 	UPROPERTY()
 	class UUserWidget* HUDWidgetGameOver;
@@ -43,6 +46,9 @@ protected:
 
 	UPROPERTY()
 	class UUserWidget* HUDWidgetDialog;
+	
+	UPROPERTY()
+	class UUserWidget* HUDWidgetConversationSelector;
 
 private:
 	void AddUserWidget(const TSubclassOf<class UUserWidget>& WidgetClass, class UUserWidget* Widget);	

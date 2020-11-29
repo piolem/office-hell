@@ -26,9 +26,14 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
 	void AddItem(FString UniqueItemName);
 
+	UFUNCTION(BlueprintCallable)		
 	void RemoveItem(FString UniqueItemName);
+
+	UFUNCTION(BlueprintCallable)
+	bool HasItem(FString UniqueItemName);
 
 	void RemoveAllItems();
 

@@ -24,6 +24,7 @@ void AOHHUD::BeginPlay()
 	AddUserWidget(HUDWidgetGameOverClass, HUDWidgetGameOver);
 	AddUserWidget(HUDWidgetInventoryClass, HUDWidgetInventory);
 	AddUserWidget(HUDWidgetDialogClass, HUDWidgetDialog);
+	AddUserWidget(HUDWidgetConversationSelectorClass, HUDWidgetConversationSelector);
 }
 
 void AOHHUD::AddUserWidget(const TSubclassOf<UUserWidget>& WidgetClass, UUserWidget* Widget)
